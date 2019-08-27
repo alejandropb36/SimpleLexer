@@ -10,7 +10,7 @@ namespace SimpleLexer
     {
         private LinkedList<Token> tokens;
         private int estado;
-        private string auxiliarLexico;
+        private String auxiliarLexico;
         
         public LinkedList<Token> analizar(string entrada)
         {
@@ -18,7 +18,7 @@ namespace SimpleLexer
             tokens = new LinkedList<Token>();
             estado = 0;
             auxiliarLexico = "";
-            char caracter;
+            Char caracter;
 
             for(int i = 0; i < entrada.Length; i++)
             {
@@ -26,6 +26,7 @@ namespace SimpleLexer
                 switch (estado)
                 {
                     case 0:
+                        if(caracter.IsDigit())
                         break;
                     case 1:
                         break;
