@@ -10,7 +10,7 @@ namespace SimpleLexer
     {
         public enum Tipo
         {
-            Eror = -1,
+            Error = -1,
             Tipo,
             PuntoComa,
             Coma,
