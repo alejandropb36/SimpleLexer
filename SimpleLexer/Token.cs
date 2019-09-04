@@ -42,6 +42,14 @@ namespace SimpleLexer
             this.valor = valor;
         }
 
+        public Tipo TipoToken
+        {
+            get
+            {
+                return this.tipoToken;
+            }
+        }
+
         public string Valor
         {
             get
@@ -58,10 +66,10 @@ namespace SimpleLexer
         {
             switch (tipoToken)
             {
-                case Tipo.Eror:
+                case Tipo.Error:
                     return "Error";
                 case Tipo.Tipo:
-                    return "Tipo";
+                    return "Tipo de dato";
                 case Tipo.PuntoComa:
                     return "Punto y coma";
                 case Tipo.Coma:

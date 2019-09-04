@@ -13,9 +13,12 @@ namespace SimpleLexer
 {
     public partial class MainForm : Form
     {
+        AnalizadorLexico analizador;
+        LinkedList<Token> tokens;
 
         public MainForm()
         {
+            analizador = new AnalizadorLexico();
             InitializeComponent();
         }
 
@@ -28,15 +31,17 @@ namespace SimpleLexer
             if(textBoxContent1.Text != "")
             {
                 textContent1 = textBoxContent1.Text;
-                
-                words = Regex.Split(textContent1, pattern);
+                tokens = analizador.analizar(textContent1);
                 textBoxContent2.Text = textContent1;
-                dataGridViewWords.Rows.Clear();
+                printTokens(tokens);
+            }
+        }
 
-                foreach(string word in words)
-                {
-                    dataGridViewWords.Rows.Add(word);
-                }
+        private void printTokens(LinkedList<Token> tokens)
+        {
+            foreach (Token token in tokens)
+            {
+                dataGridViewWords.Rows.Add(token.Valor, token.GetTipoToken(), token.TipoToken.GetHashCode().ToString());
             }
         }
 

@@ -32,8 +32,10 @@
             this.buttonSplitWords = new System.Windows.Forms.Button();
             this.textBoxContent2 = new System.Windows.Forms.TextBox();
             this.dataGridViewWords = new System.Windows.Forms.DataGridView();
-            this.Words = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.buttonClear = new System.Windows.Forms.Button();
+            this.Lexema = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Tipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewWords)).BeginInit();
             this.SuspendLayout();
             // 
@@ -43,7 +45,7 @@
             this.textBoxContent1.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxContent1.Multiline = true;
             this.textBoxContent1.Name = "textBoxContent1";
-            this.textBoxContent1.Size = new System.Drawing.Size(210, 115);
+            this.textBoxContent1.Size = new System.Drawing.Size(265, 336);
             this.textBoxContent1.TabIndex = 0;
             // 
             // buttonSplitWords
@@ -70,17 +72,13 @@
             // 
             this.dataGridViewWords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewWords.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Words});
-            this.dataGridViewWords.Location = new System.Drawing.Point(202, 131);
+            this.Lexema,
+            this.Tipo,
+            this.Id});
+            this.dataGridViewWords.Location = new System.Drawing.Point(333, 131);
             this.dataGridViewWords.Name = "dataGridViewWords";
-            this.dataGridViewWords.Size = new System.Drawing.Size(243, 236);
+            this.dataGridViewWords.Size = new System.Drawing.Size(293, 236);
             this.dataGridViewWords.TabIndex = 3;
-            // 
-            // Words
-            // 
-            this.Words.HeaderText = "Words";
-            this.Words.Name = "Words";
-            this.Words.Width = 200;
             // 
             // buttonClear
             // 
@@ -92,6 +90,21 @@
             this.buttonClear.Text = "Clear all";
             this.buttonClear.UseVisualStyleBackColor = true;
             this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
+            // 
+            // Lexema
+            // 
+            this.Lexema.HeaderText = "Lexema";
+            this.Lexema.Name = "Lexema";
+            // 
+            // Tipo
+            // 
+            this.Tipo.HeaderText = "Tipo";
+            this.Tipo.Name = "Tipo";
+            // 
+            // Id
+            // 
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
             // 
             // MainForm
             // 
@@ -118,8 +131,10 @@
         private System.Windows.Forms.Button buttonSplitWords;
         private System.Windows.Forms.TextBox textBoxContent2;
         private System.Windows.Forms.DataGridView dataGridViewWords;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Words;
         private System.Windows.Forms.Button buttonClear;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Lexema;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Tipo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Id;
     }
 }
 

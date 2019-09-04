@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace SimpleLexer
 {
@@ -19,6 +20,8 @@ namespace SimpleLexer
             estado = 0;
             auxiliarLexico = "";
             Char caracter;
+            Regex palabrasReservadas = new Regex(@"(int)|(float)|(string)|(char)|(return)|(main)|(for)|(while)|(if)|(else)");
+
 
             for(int i = 0; i < entrada.Length; i++)
             {
@@ -33,8 +36,12 @@ namespace SimpleLexer
                         }
                         else if (char.IsLetter(caracter))
                         {
-                            // Este estado queda pendiente definirlo
-                            estado = 2;
+                            estado = 3;
+                            auxiliarLexico += caracter;
+                        }
+                        else if(caracter == '_')
+                        {
+                            estado = 3;
                             auxiliarLexico += caracter;
                         }
                         else if(caracter == ';')
@@ -87,18 +94,39 @@ namespace SimpleLexer
                             auxiliarLexico += caracter;
                             agregarToken(Token.Tipo.OperadorSuma);
                         }
+                        else if (caracter == '!')
+                        {
+                            estado = 4;
+                            auxiliarLexico += caracter;
+                        }
+                        else if (caracter == '=')
+                        {
+                            estado = 4;
+                            auxiliarLexico += caracter;
+                        }
+                        else if (caracter == '&')
+                        {
+                            estado = 4;
+                            auxiliarLexico += caracter;
+                        }
+                        else if (caracter == '|')
+                        {
+                            estado = 4;
+                            auxiliarLexico += caracter;
+                        }
+                        else if (caracter == '>')
+                        {
+                            estado = 4;
+                            auxiliarLexico += caracter;
+                        }
+                        else if (caracter == '<')
+                        {
+                            estado = 4;
+                            auxiliarLexico += caracter;
+                        }
                         else
                         {
-                            if(caracter == '$' && i == entrada.Length - 1)
-                            {
-                                Console.WriteLine("Analisis exitoso!");
-                            }
-                            else
-                            {
-                                auxiliarLexico += caracter;
-                                agregarToken(Token.Tipo.Error);
-                                Console.WriteLine("Error");
-                            }
+                            
                         }
                         break;
                     case 1:
@@ -118,6 +146,129 @@ namespace SimpleLexer
                         }
                         break;
                     case 2:
+                        if (char.IsDigit(caracter))
+                        {
+                            estado = 2;
+                            auxiliarLexico += caracter;
+                        }
+                        else if(char.IsLetter(caracter))
+                        {
+                            estado = 3;
+                            auxiliarLexico += caracter;
+                        }
+                        else
+                        {
+                            auxiliarLexico += caracter;
+                            agregarToken(Token.Tipo.Error);
+                        }
+                        break;
+                    case 3:
+                        if (char.IsLetter(caracter))
+                        {
+                            estado = 3;
+                            auxiliarLexico += caracter;
+                            if (palabrasReservadas.IsMatch(auxiliarLexico))
+                            {
+                                agregarToken(Token.Tipo.Tipo);
+                            }
+                        }
+                        else if (char.IsDigit(caracter))
+                        {
+                            estado = 3;
+                            auxiliarLexico += caracter;
+                        }
+                        else if(caracter == '_')
+                        {
+                            estado = 3;
+                            auxiliarLexico += caracter;
+                        }
+                        else if(caracter == ' ')
+                        {
+                            agregarToken(Token.Tipo.Constante);
+                        }
+                        else
+                        {
+                            agregarToken(Token.Tipo.Error);
+                        }
+                        break;
+
+                    case 4:
+                        if(caracter == '=')
+                        {
+                            auxiliarLexico += caracter;
+                            if(auxiliarLexico == "==")
+                            {
+                                agregarToken(Token.Tipo.OperadorIgualdad);
+                            }
+                            else if(auxiliarLexico == "!=" )
+                            {
+                                agregarToken(Token.Tipo.OperadorRel);
+                            }
+                            else if (auxiliarLexico == "<=")
+                            {
+                                agregarToken(Token.Tipo.OperadorRel);
+                            }
+                            else if (auxiliarLexico == ">=")
+                            {
+                                agregarToken(Token.Tipo.OperadorRel);
+                            }
+                            else
+                            {
+                                agregarToken(Token.Tipo.Error);
+                            }
+                        }
+                        else if (caracter == '&')
+                        {
+                            auxiliarLexico += caracter;
+                            if(auxiliarLexico == "&&")
+                            {
+                                agregarToken(Token.Tipo.OperadorAnd);
+                            }
+                            else
+                            {
+                                agregarToken(Token.Tipo.Constante);
+                            }
+                        }
+                        else if (caracter == '|')
+                        {
+                            auxiliarLexico += caracter;
+                            if (auxiliarLexico == "||")
+                            {
+                                agregarToken(Token.Tipo.OperadorOr);
+                            }
+                            else
+                            {
+                                agregarToken(Token.Tipo.Constante);
+                            }
+                        }
+                        else if (caracter == ' ')
+                        {
+                            if (auxiliarLexico == "=")
+                            {
+                                agregarToken(Token.Tipo.Igual);
+                            }
+                            else
+                            {
+                                agregarToken(Token.Tipo.Constante);
+                            }
+                        }
+                        else
+                        {
+                            if(auxiliarLexico == "!")
+                            {
+                                if (caracter == ' ')
+                                {
+                                    agregarToken(Token.Tipo.OperadorNot);
+                                }
+                            }
+                            else if (caracter == ' ')
+                            {
+                                agregarToken(Token.Tipo.Constante);
+                            }
+                        }
+                        break;
+                    default:
+                        agregarToken(Token.Tipo.Error);
                         break;
 
                 }
