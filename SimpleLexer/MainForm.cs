@@ -28,7 +28,9 @@ namespace SimpleLexer
             string textContent1;
             string pattern = @"\s+";
 
-            if(textBoxContent1.Text != "")
+            textBoxContent2.Clear();
+            dataGridViewWords.Rows.Clear();
+            if (textBoxContent1.Text != "")
             {
                 textContent1 = textBoxContent1.Text;
                 tokens = analizador.analizar(textContent1);

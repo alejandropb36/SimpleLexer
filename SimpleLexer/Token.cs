@@ -69,7 +69,7 @@ namespace SimpleLexer
                 case Tipo.Error:
                     return "Error";
                 case Tipo.Tipo:
-                    return "Tipo de dato";
+                    return "Identificador";
                 case Tipo.PuntoComa:
                     return "Punto y coma";
                 case Tipo.Coma:
