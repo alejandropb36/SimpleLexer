@@ -32,10 +32,10 @@
             this.buttonSplitWords = new System.Windows.Forms.Button();
             this.textBoxContent2 = new System.Windows.Forms.TextBox();
             this.dataGridViewWords = new System.Windows.Forms.DataGridView();
-            this.buttonClear = new System.Windows.Forms.Button();
             this.Lexema = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Tipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.buttonClear = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewWords)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,7 +45,7 @@
             this.textBoxContent1.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxContent1.Multiline = true;
             this.textBoxContent1.Name = "textBoxContent1";
-            this.textBoxContent1.Size = new System.Drawing.Size(265, 336);
+            this.textBoxContent1.Size = new System.Drawing.Size(265, 477);
             this.textBoxContent1.TabIndex = 0;
             // 
             // buttonSplitWords
@@ -61,11 +61,11 @@
             // 
             // textBoxContent2
             // 
-            this.textBoxContent2.Location = new System.Drawing.Point(416, 11);
+            this.textBoxContent2.Location = new System.Drawing.Point(357, 11);
             this.textBoxContent2.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxContent2.Multiline = true;
             this.textBoxContent2.Name = "textBoxContent2";
-            this.textBoxContent2.Size = new System.Drawing.Size(210, 115);
+            this.textBoxContent2.Size = new System.Drawing.Size(269, 115);
             this.textBoxContent2.TabIndex = 2;
             // 
             // dataGridViewWords
@@ -75,21 +75,10 @@
             this.Lexema,
             this.Tipo,
             this.Id});
-            this.dataGridViewWords.Location = new System.Drawing.Point(333, 131);
+            this.dataGridViewWords.Location = new System.Drawing.Point(281, 131);
             this.dataGridViewWords.Name = "dataGridViewWords";
-            this.dataGridViewWords.Size = new System.Drawing.Size(293, 236);
+            this.dataGridViewWords.Size = new System.Drawing.Size(344, 357);
             this.dataGridViewWords.TabIndex = 3;
-            // 
-            // buttonClear
-            // 
-            this.buttonClear.Location = new System.Drawing.Point(280, 32);
-            this.buttonClear.Margin = new System.Windows.Forms.Padding(2);
-            this.buttonClear.Name = "buttonClear";
-            this.buttonClear.Size = new System.Drawing.Size(73, 23);
-            this.buttonClear.TabIndex = 4;
-            this.buttonClear.Text = "Clear all";
-            this.buttonClear.UseVisualStyleBackColor = true;
-            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
             // Lexema
             // 
@@ -106,11 +95,22 @@
             this.Id.HeaderText = "Id";
             this.Id.Name = "Id";
             // 
+            // buttonClear
+            // 
+            this.buttonClear.Location = new System.Drawing.Point(280, 32);
+            this.buttonClear.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonClear.Name = "buttonClear";
+            this.buttonClear.Size = new System.Drawing.Size(73, 23);
+            this.buttonClear.TabIndex = 4;
+            this.buttonClear.Text = "Clear all";
+            this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(637, 379);
+            this.ClientSize = new System.Drawing.Size(637, 500);
             this.Controls.Add(this.buttonClear);
             this.Controls.Add(this.dataGridViewWords);
             this.Controls.Add(this.textBoxContent2);

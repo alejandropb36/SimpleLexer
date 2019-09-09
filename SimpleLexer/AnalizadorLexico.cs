@@ -12,7 +12,7 @@ namespace SimpleLexer
         private LinkedList<Token> tokens;
         private int estado;
         private String auxiliarLexico;
-        
+
         public LinkedList<Token> analizar(string entrada)
         {
             entrada = entrada + "$";
@@ -20,10 +20,9 @@ namespace SimpleLexer
             estado = 0;
             auxiliarLexico = "";
             Char caracter;
-            Regex palabrasReservadas = new Regex(@"(int)|(float)|(string)|(char)|(return)|(main)|(for)|(while)|(if)|(else)");
 
 
-            for(int i = 0; i < entrada.Length; i++)
+            for (int i = 0; i < entrada.Length; i++)
             {
                 caracter = entrada.ElementAt(i);
                 switch (estado)
@@ -34,20 +33,65 @@ namespace SimpleLexer
                             estado = 1;
                             auxiliarLexico += caracter;
                         }
+                        else if (caracter == '"')
+                        {
+                            estado = 11;
+                            auxiliarLexico += caracter;
+                        }
+                        else if (caracter == '_')
+                        {
+                            estado = 8;
+                            auxiliarLexico += caracter;
+                        }
                         else if (char.IsLetter(caracter))
                         {
-                            estado = 3;
+                            estado = 10;
                             auxiliarLexico += caracter;
                         }
-                        else if(caracter == '_')
+                        else if (caracter == '<')
                         {
-                            estado = 3;
                             auxiliarLexico += caracter;
+                            estado = 4;
                         }
-                        else if(caracter == ';')
+                        else if (caracter == '>')
+                        {
+                            auxiliarLexico += caracter;
+                            estado = 4;
+                        }
+                        else if (caracter == '!')
+                        {
+                            auxiliarLexico += caracter;
+                            estado = 4;
+                        }
+                        else if (caracter == '=')
+                        {
+                            auxiliarLexico += caracter;
+                            estado = 5;
+                        }
+                        else if (caracter == '&')
+                        {
+                            auxiliarLexico += caracter;
+                            estado = 6;
+                        }
+                        else if (caracter == '|')
+                        {
+                            auxiliarLexico += caracter;
+                            estado = 7;
+                        }
+                        else if (caracter == '!')
+                        {
+                            auxiliarLexico += caracter;
+                            agregarToken(Token.Tipo.OperadorNot);
+                        }
+                        else if (caracter == ';')
                         {
                             auxiliarLexico += caracter;
                             agregarToken(Token.Tipo.PuntoComa);
+                        }
+                        else if (char.IsWhiteSpace(caracter))
+                        {
+                            estado = 0;
+                            auxiliarLexico = "";
                         }
                         else if (caracter == ',')
                         {
@@ -94,39 +138,19 @@ namespace SimpleLexer
                             auxiliarLexico += caracter;
                             agregarToken(Token.Tipo.OperadorSuma);
                         }
-                        else if (caracter == '!')
-                        {
-                            estado = 4;
-                            auxiliarLexico += caracter;
-                        }
-                        else if (caracter == '=')
-                        {
-                            estado = 4;
-                            auxiliarLexico += caracter;
-                        }
-                        else if (caracter == '&')
-                        {
-                            estado = 4;
-                            auxiliarLexico += caracter;
-                        }
-                        else if (caracter == '|')
-                        {
-                            estado = 4;
-                            auxiliarLexico += caracter;
-                        }
-                        else if (caracter == '>')
-                        {
-                            estado = 4;
-                            auxiliarLexico += caracter;
-                        }
-                        else if (caracter == '<')
-                        {
-                            estado = 4;
-                            auxiliarLexico += caracter;
-                        }
                         else
                         {
-                            
+                            if (caracter == '$' && i == entrada.Length - 1)
+                            {
+                                auxiliarLexico = "$";
+                                agregarToken(Token.Tipo.Pesos);
+                            }
+                            else
+                            {
+                                auxiliarLexico += caracter;
+                                agregarToken(Token.Tipo.Error);
+                                Console.WriteLine("Error");
+                            }
                         }
                         break;
                     case 1:
@@ -135,149 +159,176 @@ namespace SimpleLexer
                             estado = 1;
                             auxiliarLexico += caracter;
                         }
-                        else if(caracter == '.')
+                        else if (caracter == '.')
                         {
                             estado = 2;
                             auxiliarLexico += caracter;
                         }
-                        else if(caracter == ' ')
+                        else
                         {
                             agregarToken(Token.Tipo.Constante);
+                            i -= 1;
                         }
                         break;
-                    case 2:
-                        if (char.IsDigit(caracter))
-                        {
-                            estado = 2;
-                            auxiliarLexico += caracter;
-                        }
-                        else if(char.IsLetter(caracter))
+                    case 2://Numero Entero o Falla
+                        if (Char.IsDigit(caracter))
                         {
                             estado = 3;
                             auxiliarLexico += caracter;
                         }
                         else
                         {
-                            auxiliarLexico += caracter;
-                            agregarToken(Token.Tipo.Error);
+                            Console.WriteLine("Error lexico");
+                            estado = 0;
                         }
                         break;
-                    case 3:
-                        if (char.IsLetter(caracter))
+                    case 3://Numero Foltante
+                        if (Char.IsDigit(caracter))
                         {
                             estado = 3;
                             auxiliarLexico += caracter;
-                            if (palabrasReservadas.IsMatch(auxiliarLexico))
-                            {
-                                agregarToken(Token.Tipo.Tipo);
-                            }
+                        }
+                        else
+                        {
+                            agregarToken(Token.Tipo.Constante);
+                            i -= 1;
+                        }
+                        break;
+                    case 4://Operador Relacional
+                        if (caracter == '=')
+                        {
+                            auxiliarLexico += caracter;
+                            agregarToken(Token.Tipo.OperadorRel);
+                        }
+                        else
+                        {
+                            agregarToken(Token.Tipo.OperadorRel);
+                            i -= 1;
+                        }
+                        break;
+                    case 5://Operador Igualdad o Igual
+                        if (caracter == '=')
+                        {
+                            auxiliarLexico += caracter;
+                            agregarToken(Token.Tipo.OperadorIgualdad);
+                        }
+                        else
+                        {
+                            agregarToken(Token.Tipo.Igual);
+                            i -= 1;
+                        }
+                        break;
+                    case 6://Operador And
+                        if (caracter == '&')
+                        {
+                            auxiliarLexico += caracter;
+                            agregarToken(Token.Tipo.OperadorAnd);
+                        }
+                        else
+                        {
+                            agregarToken(Token.Tipo.Error);
+                            estado = 0;
+                        }
+                        break;
+                    case 7://Operador Or
+                        if (caracter == '|')
+                        {
+                            auxiliarLexico += caracter;
+                            agregarToken(Token.Tipo.OperadorOr);
+                        }
+                        else
+                        {
+                            agregarToken(Token.Tipo.Error);
+                            estado = 0;
+                        }
+                        break;
+                    case 8://Variables Iniciando con "_"
+                        if (char.IsLetter(caracter))
+                        {
+                            estado = 9;
+                            auxiliarLexico += caracter;
+                        }
+                        else
+                        {
+                            agregarToken(Token.Tipo.Error);
+                            estado = 0;
+                        }
+                        break;
+                    case 9:
+                        if (char.IsLetter(caracter))
+                        {
+                            estado = 9;
+                            auxiliarLexico += caracter;
                         }
                         else if (char.IsDigit(caracter))
                         {
-                            estado = 3;
+                            estado = 9;
                             auxiliarLexico += caracter;
                         }
-                        else if(caracter == '_')
+                        else
                         {
-                            estado = 3;
+                            agregarToken(Token.Tipo.Identificador);
+                            i -= 1;
+                        }
+                        break;
+                    case 10:
+                        if (char.IsLetter(caracter))
+                        {
+                            estado = 10;
                             auxiliarLexico += caracter;
                         }
-                        else if(caracter == ' ')
+                        else if (char.IsDigit(caracter))
                         {
+                            estado = 10;
+                            auxiliarLexico += caracter;
+                        }
+                        else
+                        {
+                            if (auxiliarLexico == "if")
+                            {
+                                agregarToken(Token.Tipo.If);
+                                i -= 1;
+                            }
+                            else if (auxiliarLexico == "else")
+                            {
+                                agregarToken(Token.Tipo.Else);
+                                i -= 1;
+                            }
+                            else if (auxiliarLexico == "return")
+                            {
+                                agregarToken(Token.Tipo.Return);
+                                i -= 1;
+                            }
+                            else if (auxiliarLexico == "while")
+                            {
+                                agregarToken(Token.Tipo.While);
+                                i -= 1;
+                            }
+                            else
+                            {
+                                agregarToken(Token.Tipo.Identificador);
+                                i -= 1;
+                            }
+                        }
+                        break;
+                    case 11:
+                        if (caracter != '"')
+                        {
+                            estado = 11;
+                            auxiliarLexico += caracter;
+                        }
+                        else
+                        {
+                            auxiliarLexico += caracter;
                             agregarToken(Token.Tipo.Constante);
                         }
-                        else
-                        {
-                            agregarToken(Token.Tipo.Error);
-                        }
                         break;
-
-                    case 4:
-                        if(caracter == '=')
-                        {
-                            auxiliarLexico += caracter;
-                            if(auxiliarLexico == "==")
-                            {
-                                agregarToken(Token.Tipo.OperadorIgualdad);
-                            }
-                            else if(auxiliarLexico == "!=" )
-                            {
-                                agregarToken(Token.Tipo.OperadorRel);
-                            }
-                            else if (auxiliarLexico == "<=")
-                            {
-                                agregarToken(Token.Tipo.OperadorRel);
-                            }
-                            else if (auxiliarLexico == ">=")
-                            {
-                                agregarToken(Token.Tipo.OperadorRel);
-                            }
-                            else
-                            {
-                                agregarToken(Token.Tipo.Error);
-                            }
-                        }
-                        else if (caracter == '&')
-                        {
-                            auxiliarLexico += caracter;
-                            if(auxiliarLexico == "&&")
-                            {
-                                agregarToken(Token.Tipo.OperadorAnd);
-                            }
-                            else
-                            {
-                                agregarToken(Token.Tipo.Constante);
-                            }
-                        }
-                        else if (caracter == '|')
-                        {
-                            auxiliarLexico += caracter;
-                            if (auxiliarLexico == "||")
-                            {
-                                agregarToken(Token.Tipo.OperadorOr);
-                            }
-                            else
-                            {
-                                agregarToken(Token.Tipo.Constante);
-                            }
-                        }
-                        else if (caracter == ' ')
-                        {
-                            if (auxiliarLexico == "=")
-                            {
-                                agregarToken(Token.Tipo.Igual);
-                            }
-                            else
-                            {
-                                agregarToken(Token.Tipo.Constante);
-                            }
-                        }
-                        else
-                        {
-                            if(auxiliarLexico == "!")
-                            {
-                                if (caracter == ' ')
-                                {
-                                    agregarToken(Token.Tipo.OperadorNot);
-                                }
-                            }
-                            else if (caracter == ' ')
-                            {
-                                agregarToken(Token.Tipo.Constante);
-                            }
-                        }
-                        break;
-                    default:
-                        agregarToken(Token.Tipo.Error);
-                        break;
-
                 }
+
+
+
             }
-
-           
-
             return tokens;
-
         }
 
         public void agregarToken(Token.Tipo tipo)

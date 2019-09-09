@@ -11,7 +11,7 @@ namespace SimpleLexer
         public enum Tipo
         {
             Error = -1,
-            Tipo,
+            Identificador,
             PuntoComa,
             Coma,
             ParentesisIzquierdo,
@@ -68,7 +68,7 @@ namespace SimpleLexer
             {
                 case Tipo.Error:
                     return "Error";
-                case Tipo.Tipo:
+                case Tipo.Identificador:
                     return "Identificador";
                 case Tipo.PuntoComa:
                     return "Punto y coma";
