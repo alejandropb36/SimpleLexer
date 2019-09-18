@@ -33,7 +33,7 @@
             this.textBoxContent2 = new System.Windows.Forms.TextBox();
             this.dataGridViewWords = new System.Windows.Forms.DataGridView();
             this.buttonClear = new System.Windows.Forms.Button();
-            this.Lexema = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Palabra = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Tipo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewWords)).BeginInit();
@@ -75,7 +75,7 @@
             // 
             this.dataGridViewWords.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewWords.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Lexema,
+            this.Palabra,
             this.Tipo,
             this.Id});
             this.dataGridViewWords.Location = new System.Drawing.Point(12, 505);
@@ -94,11 +94,11 @@
             this.buttonClear.UseVisualStyleBackColor = true;
             this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
             // 
-            // Lexema
+            // Palabra
             // 
-            this.Lexema.HeaderText = "Lexema";
-            this.Lexema.Name = "Lexema";
-            this.Lexema.Width = 200;
+            this.Palabra.HeaderText = "Palabra";
+            this.Palabra.Name = "Palabra";
+            this.Palabra.Width = 200;
             // 
             // Tipo
             // 
@@ -138,7 +138,7 @@
         private System.Windows.Forms.TextBox textBoxContent2;
         private System.Windows.Forms.DataGridView dataGridViewWords;
         private System.Windows.Forms.Button buttonClear;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Lexema;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Palabra;
         private System.Windows.Forms.DataGridViewTextBoxColumn Tipo;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
     }
